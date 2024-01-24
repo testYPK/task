@@ -9,6 +9,7 @@ use App\Models\Settings;
 use Carbon\Carbon;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use League\Csv\Exception;
 use League\Csv\Reader;
@@ -39,18 +40,19 @@ class FileService
      */
     public function processCsvFiles(): void
     {
+        $settings = Settings::first();
+
+        $files = Storage::files('public/import');
+
         Award::truncate();
 
-        // Retrieving list of unprocessed files
-        $unprocessedFiles = File::whereNull('processed_at')->get();
-
-        foreach ($unprocessedFiles as $file) {
+        foreach ($files as $file) {
             // Path to the file in storage
-            $filePath = storage_path("app/csvFiles/{$file->file_path}");
+            $filePath = storage_path("app/$file");
 
             try {
                 // Reading data from CSV File
-                $awards = $this->parseCsvFile($file->path());
+                $awards = $this->parseCsvFile($filePath);
 
                 Validator::make($awards, [
                     Award::$validationRules
@@ -58,17 +60,18 @@ class FileService
 
                 array_map(fn($awardData) => Award::create($awardData), $awards);
 
-                $this->logSuccess($file->path(), count($awards));
+                Storage::move($file, $settings->path
+                    . '/'
+                    . $settings->file_name_pattern
+                    . '_'
+                    . random_int(0,9999)
+                );
+
+                $this->logSuccess($filePath, count($awards));
             } catch (\Exception $e) {
                 Log::error("Something wrong with data: " . $e->getMessage());
-                $this->logError($file->path());
+                $this->logError($filePath);
             }
-
-            // Update processed_at and stored_name fields
-            $file->update([
-                'processed_at' => now(),
-                'stored_name' => 'processed_' . $file->stored_name,
-            ]);
         }
     }
 
