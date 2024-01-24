@@ -12,10 +12,10 @@ return new class extends Migration {
     {
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
-            $table->string('path')->default('csvFiles');
-            $table->string('file_name_pattern')->default('csv_file');
-            $table->string('load_schedule')->default('0:00');
-            $table->boolean('load_enabled')->default(true);
+            $table->string('key')->unique();
+            $table->string('label');
+            $table->enum('type', ['text', 'checkbox', 'time'])->default('text');
+            $table->string('value')->nullable();
             $table->timestamps();
         });
     }

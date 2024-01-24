@@ -5,7 +5,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12 text-center">
-                <h4>Awards</h4>
+                <h1>Awards</h1>
                 <div class="container text-center">
                     <table class="table table-striped">
                         <thead>
@@ -16,15 +16,16 @@
                             <th scope="col">Movie</th>
                         </tr>
                         </thead>
+                        <tbody>
                         @foreach($awards as $award)
-                            <tbody>
                             <tr>
                                 <td>{{ $award->name }}</td>
                                 <td>{{ $award->year }}</td>
                                 <td>{{ $award->age }}</td>
                                 <td>{{ $award->movie }}</td>
-                            </tbody>
+                            </tr>
                         @endforeach
+                        </tbody>
                     </table>
                 </div>
             </div>

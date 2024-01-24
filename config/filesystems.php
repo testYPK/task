@@ -36,12 +36,6 @@ return [
             'throw' => false,
         ],
 
-        'import' => [
-            'driver' => 'local',
-            'root' => storage_path('import'),
-            'throw' => false,
-        ],
-
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

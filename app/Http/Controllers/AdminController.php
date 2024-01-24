@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Settings;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Config;
 
 class AdminController extends Controller
 {
@@ -15,26 +14,32 @@ class AdminController extends Controller
 
     public function edit()
     {
-        $settings = Settings::first();
+        $settings = Settings::all();
 
         return view('admin.settings', compact('settings'));
     }
 
     public function update(Request $request)
     {
-        $settings = Settings::first();
+        $settings = Settings::all();
 
-        if (!$settings) {
-            $settings = new Settings;
+        foreach ($settings as $setting) {
+            switch ($setting['key']) {
+                case 'path':
+                    $setting['value'] = $request->input('path');
+                    break;
+                case 'file_name_pattern':
+                    $setting['value'] = $request->input('file_name_pattern');
+                    break;
+                case 'load_enabled':
+                    $setting['value'] = $request->input('load_enabled');
+                    break;
+                case 'load_schedule':
+                    $setting['value'] = $request->input('load_schedule');
+                    break;
+            }
+            $setting->save();
         }
-
-        $settings->path = $request->input('file_path_template');
-        $settings->file_name_pattern = $request->input('file_name_template');
-        $settings->load_schedule = $request->input('load_schedule_template');
-        $settings->load_enabled = $request->has('load_enabled');
-
-        $settings->save();
-
         return redirect()->route('admin.edit')->with('success', 'Settings have been updated');
     }
 

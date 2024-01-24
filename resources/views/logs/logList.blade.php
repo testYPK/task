@@ -5,7 +5,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12 text-center">
-                <h4>Log history</h4>
+                <h1>Log history</h4>
                 <div class="container text-center">
                     <table class="table table-striped">
                         <thead>
@@ -15,14 +15,15 @@
                             <th scope="col">Records added</th>
                         </tr>
                         </thead>
+                        <tbody>
                         @foreach($logs as $log)
-                            <tbody>
                             <tr>
                                 <td>{{ $log->file_path }}</td>
                                 <td>{{ $log->status }}</td>
                                 <td>{{ $log->records_added }}</td>
-                            </tbody>
+                            </tr>
                         @endforeach
+                        </tbody>
                     </table>
                 </div>
             </div>

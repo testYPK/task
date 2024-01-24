@@ -34,47 +34,6 @@ class FileService
         return array_map('array_change_key_case', $data);
     }
 
-    /**
-     * @throws UnavailableStream
-     * @throws Exception
-     */
-    public function processCsvFiles(): void
-    {
-        $settings = Settings::first();
-
-        $files = Storage::files('public/import');
-
-        Award::truncate();
-
-        foreach ($files as $file) {
-            // Path to the file in storage
-            $filePath = storage_path("app/$file");
-
-            try {
-                // Reading data from CSV File
-                $awards = $this->parseCsvFile($filePath);
-
-                Validator::make($awards, [
-                    Award::$validationRules
-                ]);
-
-                array_map(fn($awardData) => Award::create($awardData), $awards);
-
-                Storage::move($file, $settings->path
-                    . '/'
-                    . $settings->file_name_pattern
-                    . '_'
-                    . random_int(0,9999)
-                );
-
-                $this->logSuccess($filePath, count($awards));
-            } catch (\Exception $e) {
-                Log::error("Something wrong with data: " . $e->getMessage());
-                $this->logError($filePath);
-            }
-        }
-    }
-
     public function logSuccess(string $filePath, int $countAwards): void
     {
         OwnLog::create([

@@ -12,29 +12,22 @@
         <form action="{{ route('admin.update') }}" method="post">
             @csrf
             @method('patch')
-            <div class="mb-3 mt-4">
-                <label for="file_path_template" class="form-label">Path for saving the file:</label>
-                <input type="text" class="form-control" id="file_path_template" name="file_path_template"
-                       value="{{ $settings->path ?? null }}">
-            </div>
-            <div class="mb-3">
-                <label for="file_name_template" class="form-label">Pattern for file name:</label>
-                <input type="text" class="form-control" id="file_name_template" name="file_name_template"
-                       value="{{ $settings->file_name_pattern ?? null }}">
-            </div>
-            <div class="mb-3">
-                <label for="load_schedule_template">Load schedule time:</label>
-                <input type="time" id="load_schedule_template" name="load_schedule_template" required
-                       value= {{ $settings->load_schedule }}>
-            </div>
-            <div class="mb-3 form-check">
-                <label for="load_enabled">
-                    <input type="checkbox" class="form-check-input" name="load_enabled"
-                        {{ $settings->load_enabled ? 'checked' : '' }}>
-                    Enable load
-                </label>
-            </div>
-            <button type="submit" class="btn btn-primary">Save</button>
+            @foreach($settings as $setting)
+                <div class="mb-3 mt-4">
+                    @if($setting->type === 'checkbox')
+                        <div class="mb-3 mt-4 form-check">
+                            <label class="form-label">{{ $setting->label }}</label>
+                            <input type="{{ $setting->type }}" class="form-check-input" name="{{ $setting->key }}"
+                                {{ $setting->value ? 'checked' : '' }}>
+                        </div>
+                    @else
+                        <label class="form-label">{{ $setting->label }}</label>
+                        <input type="{{ $setting->type }}" class="form-control" name="{{ $setting->key }}"
+                               value="{{ $setting->value }}">
+                    @endif
+                </div>
+            @endforeach
+            <button type="submit" class="btn btn-danger">Save</button>
         </form>
     </div>
 @endsection
