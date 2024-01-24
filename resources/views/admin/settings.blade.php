@@ -8,10 +8,11 @@
         </div>
     @endif
     <div class="m-4" style="width: 400px;">
+        <h1>Settings</h1>
         <form action="{{ route('admin.update') }}" method="post">
             @csrf
             @method('patch')
-            <div class="mb-3">
+            <div class="mb-3 mt-4">
                 <label for="file_path_template" class="form-label">Path for saving the file:</label>
                 <input type="text" class="form-control" id="file_path_template" name="file_path_template"
                        value="{{ $settings->path ?? null }}">
@@ -29,7 +30,7 @@
             <div class="mb-3 form-check">
                 <label for="load_enabled">
                     <input type="checkbox" class="form-check-input" name="load_enabled"
-                        {{ $settings->load_enabled ?? false }}>
+                        {{ $settings->load_enabled ? 'checked' : '' }}>
                     Enable load
                 </label>
             </div>

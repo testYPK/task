@@ -15,4 +15,8 @@ class Settings extends Model
         'load_schedule',
         'load_enabled',
     ];
+
+    protected $casts = [
+        'load_enabled' => 'boolean',
+    ];
 }
