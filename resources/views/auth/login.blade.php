@@ -1,0 +1,36 @@
+@extends('layouts.app')
+@section('auth')
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <h2 class="display-5" style="margin-bottom: 50px">Login</h2>
+                <form action="{{ route('auth.login') }}" method="POST">
+                    @csrf
+                    <div class="form-group">
+                        <label for="name">Email : </label>
+                        <input type="text" class="form-control" id="email" name="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Password : </label>
+                        <input type="password" class="form-control" id="password" name="password">
+                    </div>
+                    @if ($errors->any())
+                        <div class="alert alert-danger mt-2">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    <button type="submit" class="btn btn-danger mt-2">Login</button>
+                </form>
+                <div class="mt-2">
+                    <a href="{{ route('auth.registerForm') }}" class="btn btn-danger">Register</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+@endsection
