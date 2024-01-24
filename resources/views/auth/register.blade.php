@@ -28,7 +28,7 @@
                             </ul>
                         </div>
                     @endif
-                    <button type="submit" class="btn btn-primary mt-2" style="background-color: #ef4444">Register</button>
+                    <button type="submit" class="btn btn-danger mt-2">Register</button>
                 </form>
             </div>
         </div>
