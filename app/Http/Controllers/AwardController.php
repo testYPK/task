@@ -9,7 +9,6 @@ class AwardController extends Controller
     public function showAwardList()
     {
         $awards = Award::all();
-
         return view('awards.awardsList', ['awards' => $awards]);
     }
 }
