@@ -3,41 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Award;
-use App\Models\File;
 use App\Services\FileService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
-
 class FileController extends Controller
 {
 
-    public function __construct(private readonly FileService $fileService)
-    {
-    }
-
-//    public function upload(Request $request)
-//    {
-//        $request->validate([
-//            'file' => 'required|mimes:csv,txt',
-//        ]);
-//
-//        $file = $request->file('file');
-//
-//        if ($file->isValid()) {
-//            $filePath = Storage::disk('csvFiles')->putFileAs('/', $file, $file->getClientOriginalName());
-//        }
-//
-//        $csvFile = File::create([
-//            'file_path' => $filePath,
-//            'stored_name' => $file->getClientOriginalName()
-//        ]);
-//
-//        $csvFile->save();
-//
-//        return redirect('/dashboard');
-//    }
+    public function __construct(private readonly FileService $fileService){}
 
     public function manualUpload(Request $request)
     {
@@ -54,9 +28,12 @@ class FileController extends Controller
 
         try {
             $awards = $this->fileService->parseCsvFile($file->path());
+
             Validator::make($awards, [
                 Award::$validationRules
             ]);
+
+            Award::truncate();
 
             array_map(fn($awardData) => Award::create($awardData), $awards);
 
@@ -66,8 +43,9 @@ class FileController extends Controller
         } catch (\Exception $e) {
             Log::error("Something wrong with data: " . $e->getMessage());
             $this->fileService->logError($file->path());
+            return redirect()->route('admin.index')->withErrors(['message' => 'Error. File was not uploaded']);
         }
 
-        return redirect('/');
+        return redirect()->route('admin.index')->with('success', 'CSV file was successfully uploaded');
     }
 }

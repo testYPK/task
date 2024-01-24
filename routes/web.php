@@ -33,8 +33,8 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 
     // AdminController
     Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.index');
-    Route::get('/admin', [AdminController::class, 'indexPage'])->name('admin.indexPage');
-    Route::post('/admin/update-settings', [AdminController::class, 'updateSettings'])->name('admin.updateSettings');
+    Route::get('/admin', [AdminController::class, 'edit'])->name('admin.edit');
+    Route::patch('/admin/update-settings', [AdminController::class, 'update'])->name('admin.update');
 
     // FileController
     Route::post('/upload', [FileController::class, 'upload'])->name('files.upload');

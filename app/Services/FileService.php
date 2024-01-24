@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Award;
 use App\Models\File;
 use App\Models\Log as OwnLog;
+use App\Models\Settings;
 use Carbon\Carbon;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Log;
@@ -90,7 +91,9 @@ class FileService
 
     public function storeFile(UploadedFile $uploadedFile): File
     {
-        $savedFile = $uploadedFile->storeAs('csvFiles', 'testName' . time());
+        $settings = Settings::first();
+
+        $savedFile = $uploadedFile->storeAs($settings->path, $settings->file_name_pattern);
 
         $file = File::create([
             'file_path' => $savedFile,

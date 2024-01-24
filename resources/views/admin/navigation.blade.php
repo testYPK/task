@@ -18,7 +18,7 @@
                     <a class="nav-link" href="{{ route('logs.logList') }}">History</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin.indexPage') }}">Settings</a>
+                    <a class="nav-link" href="{{ route('admin.edit') }}">Settings</a>
                 </li>
             </ul>
             <form class="d-flex" role="search">

@@ -44,19 +44,6 @@ return [
             'throw' => false,
         ],
 
-        'csvFiles' => [
-            'driver' => 'local',
-            'root' => storage_path('app/csvFiles'),
-            'url' => env('APP_URL') . '/storage',
-        ],
-
-        'csvPublic' => [
-            'driver' => 'local',
-            'root' => public_path('csvPublic'),
-            'url' => env('APP_URL').'/csvPublic',
-            'visibility' => 'public',
-        ],
-
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
