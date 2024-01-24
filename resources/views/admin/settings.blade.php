@@ -23,9 +23,9 @@
                        value="{{ $settings->file_name_pattern ?? null }}">
             </div>
             <div class="mb-3">
-                <label for="load_schedule_template" class="form-label">Load schedule time:</label>
-                <input type="text" class="form-control" id="load_schedule_template" name="load_schedule_template"
-                       value="{{ $settings->load_schedule ?? null }}">
+                <label for="load_schedule_template">Load schedule time:</label>
+                <input type="time" id="load_schedule_template" name="load_schedule_template" required
+                       value= {{ $settings->load_schedule }}>
             </div>
             <div class="mb-3 form-check">
                 <label for="load_enabled">

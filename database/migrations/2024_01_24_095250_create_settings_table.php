@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string('path')->default('csvFiles');
             $table->string('file_name_pattern')->default('csv_file');
-            $table->string('load_schedule')->nullable();
+            $table->string('load_schedule')->default('0:00');
             $table->boolean('load_enabled')->default(true);
             $table->timestamps();
         });
