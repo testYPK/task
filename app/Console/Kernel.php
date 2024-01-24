@@ -15,7 +15,7 @@ class Kernel extends ConsoleKernel
     {
         $settings = Settings::first();
         if ($settings->load_enabled) {
-            $schedule->command('csv:process')->everyFiveSeconds();
+            $schedule->command('csv:process')->at();
         }
     }
 
