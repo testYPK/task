@@ -13,9 +13,11 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $settings = Settings::first();
-        if ($settings->load_enabled) {
-            $schedule->command('csv:process')->at($settings->load_schedule);
+        $loadScheduleTime = Settings::where('key', 'load_schedule')->first();
+        $loadEnabled = Settings::where('key', 'load_enabled')->first();
+
+        if ($loadEnabled['value']) {
+            $schedule->command('csv:process')->at($loadScheduleTime['value']);
         }
     }
 

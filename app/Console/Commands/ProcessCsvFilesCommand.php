@@ -58,11 +58,11 @@ class ProcessCsvFilesCommand extends Command
 
                 array_map(fn($awardData) => Award::create($awardData), $awards);
 
-                $newFilePath = $patternPath['value'] . '/' . $patternFileName['value'] . '_' . Carbon::now()->toDateTimeString(). '.csv';
+                $newFilePath = $patternPath['value'] . '/' . $patternFileName['value'] . '_' . random_int(1,99999) . '.csv';
+                $oldFilePath = str_replace(storage_path() . '/app', '', $filePath);
+                Storage::move($oldFilePath, $newFilePath);
 
-                Storage::move($filePath, $newFilePath);
-
-                $this->fileService->logSuccess($filePath, count($awards));
+                $this->fileService->logSuccess($newFilePath, count($awards));
             } catch (\Exception $e) {
                 Log::error("Something wrong with data: " . $e->getMessage());
                 $this->fileService->logError($filePath);
