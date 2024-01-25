@@ -14,7 +14,6 @@ return new class extends Migration {
             $table->id();
             $table->string('file_path');
             $table->string('stored_name');
-            $table->datetime('processed_at')->nullable();
             $table->timestamps();
         });
     }

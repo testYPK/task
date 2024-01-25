@@ -53,16 +53,16 @@ class FileService
 
     public function storeFile(UploadedFile $uploadedFile): File
     {
-        $settings = Settings::first();
+        $patternPath = Settings::where('key', 'path')->first();
+        $patternFileName = Settings::where('key', 'file_name_pattern')->first();
 
-        $savedFile = $uploadedFile->storeAs($settings->path, $settings->file_name_pattern);
+        $fileName = $patternFileName['value'] . '_' . random_int(1,99999) . '.csv';
 
-        $file = File::create([
+        $savedFile = $uploadedFile->storeAs($patternPath['value'], $fileName);
+
+        return File::create([
             'file_path' => $savedFile,
-            'stored_name' => basename($savedFile),
-            'processed_at' => Carbon::now(),
+            'stored_name' => $fileName,
         ]);
-
-        return $file;
     }
 }

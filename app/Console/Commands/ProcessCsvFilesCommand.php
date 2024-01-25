@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Award;
+use App\Models\File;
 use App\Models\Settings;
 use App\Services\FileService;
 use Illuminate\Console\Command;
@@ -57,9 +58,15 @@ class ProcessCsvFilesCommand extends Command
 
                 array_map(fn($awardData) => Award::create($awardData), $awards);
 
-                $newFilePath = $patternPath['value'] . '/' . $patternFileName['value'] . '_' . random_int(1,99999) . '.csv';
+                $newFileName = $patternFileName['value'] . '_' . random_int(1, 99999) . '.csv';
+                $newFilePath = $patternPath['value'] . '/' . $newFileName;
                 $oldFilePath = str_replace(storage_path() . '/app', '', $filePath);
                 Storage::move($oldFilePath, $newFilePath);
+
+                File::create([
+                    'file_path' => $newFilePath,
+                    'stored_name' => $newFileName,
+                ]);
 
                 $this->fileService->logSuccess($newFilePath, count($awards));
             } catch (\Exception $e) {

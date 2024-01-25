@@ -12,6 +12,5 @@ class File extends Model
     protected $fillable = [
         'file_path',
         'stored_name',
-        'processed_at'
     ];
 }
