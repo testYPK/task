@@ -12,13 +12,16 @@
         </ul>
     </div>
 @endif
-<div>
+<div class="container">
+    <div class="row w-50 p-3">
+        <h3>Manual CSV file upload</h3>
+    </div>
     <form action="{{ route('files.manualUpload') }}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="container">
-            <div class="row w-50 p-3">
+            <div class="row w-25 p-3">
                 <label for="file" class="form-label">Choose file:</label>
-                <input class="form-control form-control-lg" type="file" id="file" name="file"
+                <input class="form-control form-control" type="file" id="file" name="file"
                        accept=".csv">
                 <button class="btn btn-danger" type="submit">
                     Upload
