@@ -2,15 +2,10 @@
 
 namespace App\Services;
 
-use App\Models\Award;
 use App\Models\File;
 use App\Models\Log as OwnLog;
 use App\Models\Settings;
-use Carbon\Carbon;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
 use League\Csv\Exception;
 use League\Csv\Reader;
 use League\Csv\UnavailableStream;
