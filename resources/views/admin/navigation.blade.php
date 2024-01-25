@@ -21,6 +21,10 @@
                     <a class="nav-link" href="{{ route('admin.edit') }}">Settings</a>
                 </li>
             </ul>
+            <form action="{{ route('auth.logout') }}" method="POST">
+                @csrf
+                <button class="btn btn-outline-danger" type="submit">Logout</button>
+            </form>
         </div>
     </div>
 </nav>

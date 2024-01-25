@@ -36,7 +36,7 @@ class ProcessCsvFilesCommand extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): void
     {
         $patternPath = Settings::where('key', 'path')->first();
         $patternFileName = Settings::where('key', 'file_name_pattern')->first();

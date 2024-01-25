@@ -3,23 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Models\Settings;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-    public function index()
+    public function index(): View
     {
         return view('admin.dashboard');
     }
 
-    public function edit()
+    public function edit(): View
     {
         $settings = Settings::all();
 
         return view('admin.settings', compact('settings'));
     }
 
-    public function update(Request $request)
+    public function update(Request $request): RedirectResponse
     {
         $settings = Settings::all();
 

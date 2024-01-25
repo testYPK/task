@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Award;
 use App\Services\FileService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
@@ -13,7 +14,7 @@ class FileController extends Controller
 
     public function __construct(private readonly FileService $fileService){}
 
-    public function manualUpload(Request $request)
+    public function manualUpload(Request $request): RedirectResponse
     {
         $request->validate([
             'file' => 'required|mimes:csv,txt',

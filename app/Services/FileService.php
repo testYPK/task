@@ -46,7 +46,7 @@ class FileService
         ]);
     }
 
-    public function storeFile(UploadedFile $uploadedFile): File
+    public function storeFile(UploadedFile $uploadedFile): void
     {
         $patternPath = Settings::where('key', 'path')->first();
         $patternFileName = Settings::where('key', 'file_name_pattern')->first();
@@ -55,7 +55,7 @@ class FileService
 
         $savedFile = $uploadedFile->storeAs($patternPath['value'], $fileName);
 
-        return File::create([
+        File::create([
             'file_path' => $savedFile,
             'stored_name' => $fileName,
         ]);

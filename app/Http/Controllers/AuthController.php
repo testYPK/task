@@ -3,18 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    public function showLoginForm()
+    public function showLoginForm(): View
     {
         return view('auth.login');
     }
 
-    public function login(Request $request)
+    public function login(Request $request): \Illuminate\Foundation\Application|\Illuminate\Routing\Redirector|\Illuminate\Contracts\Foundation\Application|RedirectResponse
     {
         $credentials = $request->only('email', 'password');
 
@@ -27,12 +29,12 @@ class AuthController extends Controller
         ]);
     }
 
-    public function showRegistrationForm()
+    public function showRegistrationForm(): View
     {
         return view('auth.register');
     }
 
-    public function register(Request $request)
+    public function register(Request $request): RedirectResponse
     {
         $request->validate([
             'name' => 'required|string|max:255',
@@ -51,10 +53,10 @@ class AuthController extends Controller
         return redirect(route('admin.index'));
     }
 
-    public function logout()
+    public function logout(): RedirectResponse
     {
         Auth::logout();
 
-        return redirect('/login');
+        return redirect()->route('auth.loginForm');
     }
 }
